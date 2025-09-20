@@ -11,11 +11,17 @@ import "../styles/global.css";
     <title>Slot Machine</title>
   </head>
   <body
-    class="min-h-dvh bg-[radial-gradient(ellipse_at_top,_#111_0%,_#070707_45%,_#000_100%)] text-white antialiased"
+    class="min-h-dvh flex items-center justify-center bg-[#0b0b1f] bg-[radial-gradient(120%_80%_at_50%_20%,rgba(255,215,0,0.18)_0%,rgba(255,69,0,0.12)_25%,rgba(255,20,147,0.12)_45%,rgba(0,206,209,0.12)_65%,rgba(50,205,50,0.14)_80%,transparent_85%),radial-gradient(100%_100%_at_50%_120%,rgba(255,215,0,0.08)_0%,transparent_60%)] text-white antialiased"
   >
-    <main class="max-w-xl mx-auto p-6 sm:p-8">
-      <h1 class="text-center text-6xl font-semibold mb-4">
-        🎰 Slot Machine 🎰
+    <main class="max-w-3xl mx-auto p-6 sm:p-8">
+      <h1 class="text-center text-5xl font-semibold mb-4">
+        <span class="animate-[siren_1s_infinite]">🎰</span>
+        <span
+          class="font-['Audiowide'] bg-clip-text text-transparent bg-[linear-gradient(90deg,#FFD700,#FF4500,#FF1493,#00CED1,#32CD32,#FFD700)] [background-size:200%_200%] animate-[rainbow_6s_linear_infinite]"
+        >
+          Jay's Slot Machine
+        </span>
+        <span class="animate-[siren_1s_infinite]">🎰</span>
       </h1>
       <div
         class="w-full mx-auto p-6 rounded-2xl shadow-lg bg-white/70 dark:bg-zinc-900/60 backdrop-blur border border-zinc-200/70 dark:border-zinc-800 select-none"
@@ -31,9 +37,13 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500 text-center">Balance</div>
             <div
-              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
+              class="font-['VT323'] text-xl font-bold text-zinc-500 text-center"
+            >
+              Balance
+            </div>
+            <div
+              class="font-['Audiowide'] text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-balance
             >
               $ 100
@@ -42,11 +52,15 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500 text-center">Bet</div>
-            <div class="flex items-center gap-2">
+            <div
+              class="font-['VT323'] text-xl font-bold text-zinc-500 text-center"
+            >
+              Bet
+            </div>
+            <div class="flex items-center justify-center gap-2">
               <button
                 type="button"
-                class="text-zinc-700 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                class="font-['Audiowide'] text-zinc-700 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 data-bet-dec>-</button
               >
               <input
@@ -54,12 +68,12 @@ import "../styles/global.css";
                 min="1"
                 max="50"
                 value="5"
-                class="text-zinc-700 w-16 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 bg-transparent text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="font-['Audiowide'] text-zinc-700 w-16 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 bg-transparent text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 data-bet
               />
               <button
                 type="button"
-                class="text-zinc-700 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                class="font-['Audiowide'] text-zinc-700 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 data-bet-inc>+</button
               >
             </div>
@@ -67,9 +81,13 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500 text-center">Plays</div>
             <div
-              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
+              class="font-['VT323'] text-xl font-bold text-zinc-500 text-center"
+            >
+              Plays
+            </div>
+            <div
+              class="font-['Audiowide'] text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-plays
             >
               0
@@ -78,9 +96,13 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500 text-center">2‑of‑a‑kind</div>
             <div
-              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
+              class="font-['VT323'] text-xl font-bold text-zinc-500 text-center"
+            >
+              2‑of‑a‑kind
+            </div>
+            <div
+              class="font-['Audiowide'] text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-wins2
             >
               0
@@ -89,9 +111,13 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500 text-center">3‑of‑a‑kind</div>
             <div
-              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
+              class="font-['VT323'] text-xl font-bold text-zinc-500 text-center"
+            >
+              3‑of‑a‑kind
+            </div>
+            <div
+              class="font-['Audiowide'] text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-wins3
             >
               0
@@ -100,16 +126,20 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500 text-center">Profit</div>
             <div
-              class="text-lg text-center font-semibold transition-colors"
+              class="font-['VT323'] text-xl font-bold text-zinc-500 text-center"
+            >
+              Profit
+            </div>
+            <div
+              class="font-['Audiowide'] text-lg text-center font-semibold transition-colors"
               data-profit
             >
               +$ 0
             </div>
           </div>
           <div
-            class="col-span-full text-xs text-zinc-700 dark:text-zinc-300 text-center mt-2"
+            class="font-['Audiowide'] col-span-full text-zinc-700 dark:text-zinc-300 text-center mt-2"
           >
             Win rate: <span data-winrate>0.0%</span> · RTP: <span data-rtp
               >0.0%</span
@@ -128,19 +158,19 @@ import "../styles/global.css";
             class="flex items-center justify-center h-24 sm:h-28 rounded-xl bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 shadow-sm transition-transform"
             data-reel
           >
-            <span data-symbol class="text-white">❔</span>
+            <span data-symbol class="font-['VT323'] text-white">❔</span>
           </div>
           <div
             class="flex items-center justify-center h-24 sm:h-28 rounded-xl bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 shadow-sm transition-transform"
             data-reel
           >
-            <span data-symbol class="text-white">❔</span>
+            <span data-symbol class="font-['VT323'] text-white">❔</span>
           </div>
           <div
             class="flex items-center justify-center h-24 sm:h-28 rounded-xl bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 shadow-sm transition-transform"
             data-reel
           >
-            <span data-symbol class="text-white">❔</span>
+            <span data-symbol class="text-white font-['VT323']">❔</span>
           </div>
         </div>
 
@@ -151,28 +181,30 @@ import "../styles/global.css";
         >
           <button
             type="button"
-            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-medium hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+            class="font-['Audiowide'] inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-medium hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
             data-spin>Spin</button
           >
           <button
             type="button"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            class="font-['Audiowide'] inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             data-auto>Autoplay</button
           >
           <button
             type="button"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            class="font-['Audiowide'] inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             data-reset>Reset</button
           >
           <button
             type="button"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            class="font-['Audiowide'] inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             data-audio-toggle>🔊 Sound On</button
           >
         </div>
 
         <!-- Payouts -->
-        <div class="text-center mt-4 text-sm text-zinc-700 dark:text-zinc-300">
+        <div
+          class="font-['Audiowide'] text-center mt-4 text-sm text-zinc-700 dark:text-zinc-300"
+        >
           Payouts — 3 match: <strong data-jackpotx>10× bet</strong> · 2 match: <strong
             data-pairx>2× bet</strong
           >
@@ -184,30 +216,75 @@ import "../styles/global.css";
       const MIN_BET = 1;
       const MAX_BET = 50;
 
+      /**
+       * Queries a single descendant element and returns it with the desired type.
+       * @template T
+       * @param {ParentNode} el - Root element to search within.
+       * @param {string} sel - CSS selector to match.
+       * @returns {T | null} Matching element or null when absent.
+       */
       const q = <T extends Element = HTMLElement>(
         el: ParentNode,
         sel: string
       ): T | null => el.querySelector<T>(sel);
 
+      /**
+       * Queries all matching descendants and returns them as a typed array.
+       * @template T
+       * @param {ParentNode} el - Root element to search within.
+       * @param {string} sel - CSS selector to match.
+       * @returns {T[]} Array of matching elements.
+       */
       const qa = <T extends Element = HTMLElement>(
         el: ParentNode,
         sel: string
       ): T[] => Array.from(el.querySelectorAll<T>(sel));
 
+      /**
+       * Restricts a number to stay within the provided lower and upper bounds.
+       * @param {number} n - Value to clamp.
+       * @param {number} lo - Minimum allowed value.
+       * @param {number} hi - Maximum allowed value.
+       * @returns {number} Clamped value.
+       */
       const clamp = (n: number, lo: number, hi: number): number =>
         Math.min(hi, Math.max(lo, n));
+
+      /**
+       * Formats a percentage value to a single decimal place, falling back to 0.0% when invalid.
+       * @param {number} n - Percentage (e.g. 42.5 for 42.5%).
+       * @returns {string} Human-readable percentage string.
+       */
       const pct = (n: number): string =>
         Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
 
+      /**
+       * Formats a number as signed currency without decimal precision.
+       * @param {number} n - Amount to format.
+       * @returns {string} Formatted currency string.
+       */
       const fmtMoney = (n: number): string => {
         const sign = n >= 0 ? "+" : "-";
         return `${sign}$ ${Math.abs(n)}`;
       };
 
+      /**
+       * Applies a special highlight colour to the jackpot symbol.
+       * @param {string} symbol - Symbol displayed on the reel.
+       * @returns {string} Tailwind text colour class name.
+       */
       const getColor = (symbol: string): string =>
         symbol === "𝟕" ? "text-red-500" : "text-white";
 
+      /**
+       * Handles serialization of game state in localStorage.
+       */
       const persist = {
+        /**
+         * Restores persisted slot machine state.
+         * @param {string} key - Storage key.
+         * @returns {State | null} Stored state when available.
+         */
         load(key: string): State | null {
           try {
             const s = localStorage.getItem(key);
@@ -216,11 +293,20 @@ import "../styles/global.css";
             return null;
           }
         },
+        /**
+         * Saves the current slot machine state.
+         * @param {string} key - Storage key.
+         * @param {State} state - State snapshot to persist.
+         */
         save(key: string, state: State): void {
           try {
             localStorage.setItem(key, JSON.stringify(state));
           } catch {}
         },
+        /**
+         * Removes any stored state for a fresh start.
+         * @param {string} key - Storage key.
+         */
         clear(key: string): void {
           try {
             localStorage.removeItem(key);
@@ -229,9 +315,20 @@ import "../styles/global.css";
       };
 
       let AC: AudioContext | null = null;
+      /**
+       * Lazily creates (or returns) the shared AudioContext instance.
+       * @returns {AudioContext} Browser audio context used for sound effects.
+       */
       const ensureAC = (): AudioContext =>
         (AC ||= new ((window as any).AudioContext ||
           (window as any).webkitAudioContext)());
+      /**
+       * Plays a short tone using Web Audio for feedback cues.
+       * @param {number} [f=440] - Frequency in Hertz.
+       * @param {number} [d=0.1] - Duration in seconds.
+       * @param {OscillatorType} [type="sine"] - Oscillator waveform.
+       * @param {number} [gain=0.05] - Output gain value.
+       */
       const tone = (
         f: number = 440,
         d: number = 0.1,
@@ -251,6 +348,9 @@ import "../styles/global.css";
           o.stop(c.currentTime + d);
         } catch {}
       };
+      /**
+       * Lightweight collection of sound effects for different outcomes.
+       */
       const sfx: { spin: () => void; pair: () => void; jackpot: () => void } = {
         spin: () => tone(320, 0.08, "triangle", 0.04),
         pair: () => {
@@ -264,10 +364,19 @@ import "../styles/global.css";
         },
       };
 
+      /**
+       * Randomly picks three symbols to simulate a slot machine spin.
+       * @returns {SpinResult} Selected symbols for each reel.
+       */
       const spin = (): SpinResult => {
         const pick = () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
         return { r1: pick(), r2: pick(), r3: pick() };
       };
+      /**
+       * Determines win conditions from a spin result.
+       * @param {SpinResult} param0 - Reel symbols to evaluate.
+       * @returns {{ allMatch: boolean; twoMatch: boolean }} Flags for jackpot and pair wins.
+       */
       const evaluate = ({
         r1,
         r2,
@@ -289,6 +398,10 @@ import "../styles/global.css";
 
       type SpinResult = { r1: string; r2: string; r3: string };
 
+      /**
+       * Bootstraps a slot machine instance by wiring up state, UI, and events.
+       * @param {HTMLElement} root - Root element containing slot machine markup.
+       */
       function init(root: HTMLElement): void {
         const ds = root.dataset;
         const cfg = {
@@ -342,6 +455,9 @@ import "../styles/global.css";
         let audioOn: boolean = true;
         let autoTimer: number | null = null;
 
+        /**
+         * Refreshes HUD values, derived metrics, and disables Spin when funds are insufficient.
+         */
         function updateHUD(): void {
           balanceEl && (balanceEl.textContent = "$ " + String(state.balance));
           playsEl && (playsEl.textContent = String(state.plays));
@@ -379,6 +495,10 @@ import "../styles/global.css";
           spinBtn && (spinBtn.disabled = state.balance < state.bet);
         }
 
+        /**
+         * Updates reel symbols and applies styling per symbol.
+         * @param {string[]} vals - Symbols to display on each reel.
+         */
         function setSymbols(vals: string[]): void {
           vals.forEach((sym, i) => {
             const span = symbols[i];
@@ -388,6 +508,9 @@ import "../styles/global.css";
           });
         }
 
+        /**
+         * Briefly animates the reels to mimic physical movement.
+         */
         function animate(): void {
           const ms = cfg.spinMs;
           reels.forEach((r, i) => {
@@ -398,12 +521,19 @@ import "../styles/global.css";
           });
         }
 
+        /**
+         * Enables or disables primary controls as a group.
+         * @param {boolean} disabled - Whether controls should be disabled.
+         */
         function setControls(disabled: boolean): void {
           [spinBtn, autoBtn, resetBtn, betEl, betInc, betDec].forEach((el) => {
             if (el && "disabled" in el) el.disabled = disabled;
           });
         }
 
+        /**
+         * Runs a single spin, updates the state, triggers sounds, and persists changes.
+         */
         function doSpin(): void {
           if (state.balance < state.bet) {
             updateHUD();
