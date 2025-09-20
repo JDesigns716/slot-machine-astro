@@ -31,9 +31,9 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500">Balance</div>
+            <div class="text-zinc-500 text-center">Balance</div>
             <div
-              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-balance
             >
               $ 100
@@ -42,7 +42,7 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500">Bet</div>
+            <div class="text-zinc-500 text-center">Bet</div>
             <div class="flex items-center gap-2">
               <button
                 type="button"
@@ -67,9 +67,9 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500">Plays</div>
+            <div class="text-zinc-500 text-center">Plays</div>
             <div
-              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-plays
             >
               0
@@ -78,9 +78,9 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500">2‑of‑a‑kind</div>
+            <div class="text-zinc-500 text-center">2‑of‑a‑kind</div>
             <div
-              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-wins2
             >
               0
@@ -89,9 +89,9 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500">3‑of‑a‑kind</div>
+            <div class="text-zinc-500 text-center">3‑of‑a‑kind</div>
             <div
-              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              class="text-lg text-center font-semibold text-zinc-700 dark:text-zinc-100"
               data-wins3
             >
               0
@@ -100,9 +100,9 @@ import "../styles/global.css";
           <div
             class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
           >
-            <div class="text-zinc-500">Profit</div>
+            <div class="text-zinc-500 text-center">Profit</div>
             <div
-              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              class="text-lg text-center font-semibold transition-colors"
               data-profit
             >
               +$ 0
@@ -347,7 +347,21 @@ import "../styles/global.css";
           playsEl && (playsEl.textContent = String(state.plays));
           wins2El && (wins2El.textContent = String(state.wins2));
           wins3El && (wins3El.textContent = String(state.wins3));
-          profitEl && (profitEl.textContent = fmtMoney(state.profit));
+          if (profitEl) {
+            profitEl.textContent = fmtMoney(state.profit);
+            profitEl.classList.remove(
+              "text-emerald-500",
+              "text-red-500",
+              "text-zinc-700"
+            );
+            if (state.profit > 0) {
+              profitEl.classList.add("text-emerald-500");
+            } else if (state.profit < 0) {
+              profitEl.classList.add("text-red-500");
+            } else {
+              profitEl.classList.add("text-zinc-700");
+            }
+          }
           if (betEl) betEl.value = String(state.bet);
 
           const wins = state.wins2 + state.wins3;
