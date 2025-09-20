@@ -14,7 +14,7 @@ import "../styles/global.css";
     class="min-h-dvh bg-[radial-gradient(ellipse_at_top,_#111_0%,_#070707_45%,_#000_100%)] text-white antialiased"
   >
     <main class="max-w-xl mx-auto p-6 sm:p-8">
-      <h1 class="text-center text-2xl font-semibold mb-4">
+      <h1 class="text-center text-6xl font-semibold mb-4">
         🎰 Slot Machine 🎰
       </h1>
       <div
@@ -184,46 +184,60 @@ import "../styles/global.css";
       const MIN_BET = 1;
       const MAX_BET = 50;
 
-      const q = (el, sel) =>
-        /** @type {HTMLElement|null} */ (el.querySelector(sel));
-      const qa = (el, sel) => Array.from(el.querySelectorAll(sel));
+      const q = <T extends Element = HTMLElement>(
+        el: ParentNode,
+        sel: string
+      ): T | null => el.querySelector<T>(sel);
 
-      const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
-      const pct = (n) => (Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%");
+      const qa = <T extends Element = HTMLElement>(
+        el: ParentNode,
+        sel: string
+      ): T[] => Array.from(el.querySelectorAll<T>(sel));
 
-      const fmtMoney = (n) => {
+      const clamp = (n: number, lo: number, hi: number): number =>
+        Math.min(hi, Math.max(lo, n));
+      const pct = (n: number): string =>
+        Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%";
+
+      const fmtMoney = (n: number): string => {
         const sign = n >= 0 ? "+" : "-";
         return `${sign}$ ${Math.abs(n)}`;
       };
 
-      const getColor = (symbol) =>
+      const getColor = (symbol: string): string =>
         symbol === "𝟕" ? "text-red-500" : "text-white";
 
       const persist = {
-        load(key) {
+        load(key: string): State | null {
           try {
             const s = localStorage.getItem(key);
-            return s ? JSON.parse(s) : null;
+            return s ? (JSON.parse(s) as State) : null;
           } catch {
             return null;
           }
         },
-        save(key, state) {
+        save(key: string, state: State): void {
           try {
             localStorage.setItem(key, JSON.stringify(state));
           } catch {}
         },
-        clear(key) {
+        clear(key: string): void {
           try {
             localStorage.removeItem(key);
           } catch {}
         },
       };
 
-      let AC = null;
-      const ensureAC = () =>
-        (AC ||= new (window.AudioContext || window.webkitAudioContext)());
-      const tone = (f = 440, d = 0.1, type = "sine", gain = 0.05) => {
+      let AC: AudioContext | null = null;
+      const ensureAC = (): AudioContext =>
+        (AC ||= new ((window as any).AudioContext ||
+          (window as any).webkitAudioContext)());
+      const tone = (
+        f: number = 440,
+        d: number = 0.1,
+        type: OscillatorType = "sine",
+        gain: number = 0.05
+      ): void => {
         try {
           const c = ensureAC();
           const o = c.createOscillator();
@@ -237,7 +251,7 @@ import "../styles/global.css";
           o.stop(c.currentTime + d);
         } catch {}
       };
-      const sfx = {
+      const sfx: { spin: () => void; pair: () => void; jackpot: () => void } = {
         spin: () => tone(320, 0.08, "triangle", 0.04),
         pair: () => {
           tone(740, 0.12, "sine", 0.06);
@@ -250,17 +264,32 @@ import "../styles/global.css";
         },
       };
 
-      const spin = () => {
+      const spin = (): SpinResult => {
         const pick = () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
         return { r1: pick(), r2: pick(), r3: pick() };
       };
-      const evaluate = ({ r1, r2, r3 }) => {
+      const evaluate = ({
+        r1,
+        r2,
+        r3,
+      }: SpinResult): { allMatch: boolean; twoMatch: boolean } => {
         const allMatch = r1 === r2 && r2 === r3;
         const twoMatch = !allMatch && (r1 === r2 || r1 === r3 || r2 === r3);
         return { allMatch, twoMatch };
       };
 
-      function init(root) {
+      type State = {
+        balance: number;
+        bet: number;
+        plays: number;
+        wins2: number;
+        wins3: number;
+        profit: number;
+      };
+
+      type SpinResult = { r1: string; r2: string; r3: string };
+
+      function init(root: HTMLElement): void {
         const ds = root.dataset;
         const cfg = {
           startBalance: Number(ds.startBalance ?? 100),
@@ -271,10 +300,10 @@ import "../styles/global.css";
           persistKey: String(ds.persistKey ?? "slot-machine.v1"),
         };
 
-        let state = {
+        let state: State = {
           balance: cfg.startBalance,
           bet: clamp(
-            Number(q(root, "[data-bet]")?.value ?? 5),
+            Number(q<HTMLInputElement>(root, "[data-bet]")?.value ?? 5),
             MIN_BET,
             MAX_BET
           ),
@@ -286,34 +315,34 @@ import "../styles/global.css";
         const persisted = persist.load(cfg.persistKey);
         if (persisted) state = { ...state, ...persisted };
 
-        const reels = qa(root, "[data-reel]");
-        const symbols = reels.map((r) => q(r, "[data-symbol]"));
-        const balanceEl = q(root, "[data-balance]");
-        const playsEl = q(root, "[data-plays]");
-        const wins2El = q(root, "[data-wins2]");
-        const wins3El = q(root, "[data-wins3]");
-        const profitEl = q(root, "[data-profit]");
-        const winrateEl = q(root, "[data-winrate]");
-        const rtpEl = q(root, "[data-rtp]");
-        const betEl = /** @type {HTMLInputElement|null} */ (
-          q(root, "[data-bet]")
+        const reels = qa<HTMLElement>(root, "[data-reel]");
+        const symbols = reels.map((r) =>
+          q<HTMLSpanElement>(r, "[data-symbol]")
         );
-        const betInc = q(root, "[data-bet-inc]");
-        const betDec = q(root, "[data-bet-dec]");
-        const spinBtn = q(root, "[data-spin]");
-        const autoBtn = q(root, "[data-auto]");
-        const resetBtn = q(root, "[data-reset]");
-        const audioBtn = q(root, "[data-audio-toggle]");
-        const pairx = q(root, "[data-pairx]");
-        const jackpotx = q(root, "[data-jackpotx]");
+        const balanceEl = q<HTMLElement>(root, "[data-balance]");
+        const playsEl = q<HTMLElement>(root, "[data-plays]");
+        const wins2El = q<HTMLElement>(root, "[data-wins2]");
+        const wins3El = q<HTMLElement>(root, "[data-wins3]");
+        const profitEl = q<HTMLElement>(root, "[data-profit]");
+        const winrateEl = q<HTMLElement>(root, "[data-winrate]");
+        const rtpEl = q<HTMLElement>(root, "[data-rtp]");
+        const betEl = q<HTMLInputElement>(root, "[data-bet]");
+        const betInc = q<HTMLButtonElement>(root, "[data-bet-inc]");
+        const betDec = q<HTMLButtonElement>(root, "[data-bet-dec]");
+        const spinBtn = q<HTMLButtonElement>(root, "[data-spin]");
+        const autoBtn = q<HTMLButtonElement>(root, "[data-auto]");
+        const resetBtn = q<HTMLButtonElement>(root, "[data-reset]");
+        const audioBtn = q<HTMLButtonElement>(root, "[data-audio-toggle]");
+        const pairx = q<HTMLElement>(root, "[data-pairx]");
+        const jackpotx = q<HTMLElement>(root, "[data-jackpotx]");
 
         if (pairx) pairx.textContent = `${cfg.pairMult}× bet`;
         if (jackpotx) jackpotx.textContent = `${cfg.jackpotMult}× bet`;
 
-        let audioOn = true;
-        let autoTimer = null;
+        let audioOn: boolean = true;
+        let autoTimer: number | null = null;
 
-        function updateHUD() {
+        function updateHUD(): void {
           balanceEl && (balanceEl.textContent = "$ " + String(state.balance));
           playsEl && (playsEl.textContent = String(state.plays));
           wins2El && (wins2El.textContent = String(state.wins2));
@@ -336,7 +365,7 @@ import "../styles/global.css";
           spinBtn && (spinBtn.disabled = state.balance < state.bet);
         }
 
-        function setSymbols(vals) {
+        function setSymbols(vals: string[]): void {
           vals.forEach((sym, i) => {
             const span = symbols[i];
             if (!span) return;
@@ -345,7 +374,7 @@ import "../styles/global.css";
           });
         }
 
-        function animate() {
+        function animate(): void {
           const ms = cfg.spinMs;
           reels.forEach((r, i) => {
             r.style.transform = "translateY(-6px)";
@@ -355,13 +384,13 @@ import "../styles/global.css";
           });
         }
 
-        function setControls(disabled) {
+        function setControls(disabled: boolean): void {
           [spinBtn, autoBtn, resetBtn, betEl, betInc, betDec].forEach((el) => {
             if (el && "disabled" in el) el.disabled = disabled;
           });
         }
 
-        function doSpin() {
+        function doSpin(): void {
           if (state.balance < state.bet) {
             updateHUD();
             return;
@@ -399,12 +428,14 @@ import "../styles/global.css";
           }, cfg.spinMs);
         }
 
-        spinBtn && (spinBtn.onclick = () => doSpin());
+        if (spinBtn) {
+          spinBtn.onclick = () => doSpin();
+        }
 
-        autoBtn &&
-          (autoBtn.onclick = () => {
+        if (autoBtn) {
+          autoBtn.onclick = () => {
             if (autoTimer) {
-              clearInterval(autoTimer);
+              window.clearInterval(autoTimer);
               autoTimer = null;
               autoBtn.textContent = "Autoplay";
               autoBtn.setAttribute("aria-pressed", "false");
@@ -413,9 +444,9 @@ import "../styles/global.css";
               autoBtn.textContent = "Stop Auto";
               autoBtn.setAttribute("aria-pressed", "true");
               setControls(false);
-              autoTimer = setInterval(() => {
+              autoTimer = window.setInterval(() => {
                 if (state.balance < state.bet) {
-                  clearInterval(autoTimer);
+                  window.clearInterval(autoTimer!);
                   autoTimer = null;
                   autoBtn.textContent = "Autoplay";
                   autoBtn.setAttribute("aria-pressed", "false");
@@ -425,10 +456,11 @@ import "../styles/global.css";
                 doSpin();
               }, cfg.autoInterval);
             }
-          });
+          };
+        }
 
-        resetBtn &&
-          (resetBtn.onclick = () => {
+        if (resetBtn) {
+          resetBtn.onclick = () => {
             persist.clear(cfg.persistKey);
             state = {
               balance: cfg.startBalance,
@@ -440,13 +472,15 @@ import "../styles/global.css";
             };
             setSymbols(["❔", "❔", "❔"]);
             updateHUD();
-          });
+          };
+        }
 
-        audioBtn &&
-          (audioBtn.onclick = () => {
+        if (audioBtn) {
+          audioBtn.onclick = () => {
             audioOn = !audioOn;
             audioBtn.textContent = audioOn ? "🔊 Sound On" : "🔇 Sound Off";
-          });
+          };
+        }
 
         betEl &&
           (betEl.oninput = () => {
@@ -473,7 +507,9 @@ import "../styles/global.css";
         updateHUD();
       }
 
-      document.querySelectorAll("[data-slot]").forEach((root) => init(root));
+      document
+        .querySelectorAll<HTMLElement>("[data-slot]")
+        .forEach((root) => init(root));
     </script>
   </body>
 </html>
