@@ -8,9 +8,472 @@ import "../styles/global.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>Slot Machine</title>
   </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <body
+    class="min-h-dvh bg-[radial-gradient(ellipse_at_top,_#111_0%,_#070707_45%,_#000_100%)] text-white antialiased"
+  >
+    <main class="max-w-xl mx-auto p-6 sm:p-8">
+      <h1 class="text-center text-2xl font-semibold mb-4">
+        🎰 Slot Machine 🎰
+      </h1>
+      <div
+        class="w-full mx-auto p-6 rounded-2xl shadow-lg bg-white/70 dark:bg-zinc-900/60 backdrop-blur border border-zinc-200/70 dark:border-zinc-800 select-none"
+        data-slot
+        data-start-balance="100"
+        data-pair-mult="2"
+        data-jackpot-mult="10"
+        data-spin-ms="350"
+        data-auto-interval="500"
+        data-persist-key="slot-machine.v1"
+      >
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm" data-hud>
+          <div
+            class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
+          >
+            <div class="text-zinc-500">Balance</div>
+            <div
+              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              data-balance
+            >
+              $ 100
+            </div>
+          </div>
+          <div
+            class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
+          >
+            <div class="text-zinc-500">Bet</div>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="text-zinc-700 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                data-bet-dec>-</button
+              >
+              <input
+                type="number"
+                min="1"
+                max="50"
+                value="5"
+                class="text-zinc-700 w-16 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 bg-transparent text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                data-bet
+              />
+              <button
+                type="button"
+                class="text-zinc-700 px-2 py-1 rounded-lg border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                data-bet-inc>+</button
+              >
+            </div>
+          </div>
+          <div
+            class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
+          >
+            <div class="text-zinc-500">Plays</div>
+            <div
+              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              data-plays
+            >
+              0
+            </div>
+          </div>
+          <div
+            class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
+          >
+            <div class="text-zinc-500">2‑of‑a‑kind</div>
+            <div
+              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              data-wins2
+            >
+              0
+            </div>
+          </div>
+          <div
+            class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
+          >
+            <div class="text-zinc-500">3‑of‑a‑kind</div>
+            <div
+              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              data-wins3
+            >
+              0
+            </div>
+          </div>
+          <div
+            class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-3 bg-white dark:bg-zinc-950"
+          >
+            <div class="text-zinc-500">Profit</div>
+            <div
+              class="text-lg font-semibold text-zinc-700 dark:text-zinc-100"
+              data-profit
+            >
+              +$ 0
+            </div>
+          </div>
+          <div
+            class="col-span-full text-xs text-zinc-700 dark:text-zinc-300 text-center mt-2"
+          >
+            Win rate: <span data-winrate>0.0%</span> · RTP: <span data-rtp
+              >0.0%</span
+            >
+          </div>
+        </div>
+
+        <!-- Reels -->
+        <div
+          class="grid grid-cols-3 gap-3 items-center justify-center text-5xl sm:text-6xl mt-6"
+          aria-live="polite"
+          aria-atomic="true"
+          data-reels
+        >
+          <div
+            class="flex items-center justify-center h-24 sm:h-28 rounded-xl bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 shadow-sm transition-transform"
+            data-reel
+          >
+            <span data-symbol class="text-white">❔</span>
+          </div>
+          <div
+            class="flex items-center justify-center h-24 sm:h-28 rounded-xl bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 shadow-sm transition-transform"
+            data-reel
+          >
+            <span data-symbol class="text-white">❔</span>
+          </div>
+          <div
+            class="flex items-center justify-center h-24 sm:h-28 rounded-xl bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 shadow-sm transition-transform"
+            data-reel
+          >
+            <span data-symbol class="text-white">❔</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div
+          class="flex flex-wrap items-center justify-center gap-3 mt-6"
+          data-controls
+        >
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-medium hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+            data-spin>Spin</button
+          >
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            data-auto>Autoplay</button
+          >
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            data-reset>Reset</button
+          >
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-300/70 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            data-audio-toggle>🔊 Sound On</button
+          >
+        </div>
+
+        <!-- Payouts -->
+        <div class="text-center mt-4 text-sm text-zinc-700 dark:text-zinc-300">
+          Payouts — 3 match: <strong data-jackpotx>10× bet</strong> · 2 match: <strong
+            data-pairx>2× bet</strong
+          >
+        </div>
+      </div>
+    </main>
+    <script>
+      const SYMBOLS = ["🍒", "🍋", "🔔", "💎", "𝟕", "🍀"];
+      const MIN_BET = 1;
+      const MAX_BET = 50;
+
+      const q = (el, sel) =>
+        /** @type {HTMLElement|null} */ (el.querySelector(sel));
+      const qa = (el, sel) => Array.from(el.querySelectorAll(sel));
+
+      const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
+      const pct = (n) => (Number.isFinite(n) ? n.toFixed(1) + "%" : "0.0%");
+
+      const fmtMoney = (n) => {
+        const sign = n >= 0 ? "+" : "-";
+        return `${sign}$ ${Math.abs(n)}`;
+      };
+
+      const getColor = (symbol) =>
+        symbol === "𝟕" ? "text-red-500" : "text-white";
+
+      const persist = {
+        load(key) {
+          try {
+            const s = localStorage.getItem(key);
+            return s ? JSON.parse(s) : null;
+          } catch {
+            return null;
+          }
+        },
+        save(key, state) {
+          try {
+            localStorage.setItem(key, JSON.stringify(state));
+          } catch {}
+        },
+        clear(key) {
+          try {
+            localStorage.removeItem(key);
+          } catch {}
+        },
+      };
+
+      let AC = null;
+      const ensureAC = () =>
+        (AC ||= new (window.AudioContext || window.webkitAudioContext)());
+      const tone = (f = 440, d = 0.1, type = "sine", gain = 0.05) => {
+        try {
+          const c = ensureAC();
+          const o = c.createOscillator();
+          const g = c.createGain();
+          o.type = type;
+          o.frequency.value = f;
+          g.gain.value = gain;
+          o.connect(g);
+          g.connect(c.destination);
+          o.start();
+          o.stop(c.currentTime + d);
+        } catch {}
+      };
+      const sfx = {
+        spin: () => tone(320, 0.08, "triangle", 0.04),
+        pair: () => {
+          tone(740, 0.12, "sine", 0.06);
+          setTimeout(() => tone(880, 0.1, "sine", 0.06), 80);
+        },
+        jackpot: () => {
+          tone(523.25, 0.15, "square", 0.07);
+          setTimeout(() => tone(659.25, 0.18, "square", 0.07), 120);
+          setTimeout(() => tone(783.99, 0.2, "square", 0.07), 240);
+        },
+      };
+
+      const spin = () => {
+        const pick = () => SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+        return { r1: pick(), r2: pick(), r3: pick() };
+      };
+      const evaluate = ({ r1, r2, r3 }) => {
+        const allMatch = r1 === r2 && r2 === r3;
+        const twoMatch = !allMatch && (r1 === r2 || r1 === r3 || r2 === r3);
+        return { allMatch, twoMatch };
+      };
+
+      function init(root) {
+        const ds = root.dataset;
+        const cfg = {
+          startBalance: Number(ds.startBalance ?? 100),
+          pairMult: Number(ds.pairMult ?? 2),
+          jackpotMult: Number(ds.jackpotMult ?? 10),
+          spinMs: Number(ds.spinMs ?? 350),
+          autoInterval: Number(ds.autoInterval ?? 500),
+          persistKey: String(ds.persistKey ?? "slot-machine.v1"),
+        };
+
+        let state = {
+          balance: cfg.startBalance,
+          bet: clamp(
+            Number(q(root, "[data-bet]")?.value ?? 5),
+            MIN_BET,
+            MAX_BET
+          ),
+          plays: 0,
+          wins2: 0,
+          wins3: 0,
+          profit: 0,
+        };
+        const persisted = persist.load(cfg.persistKey);
+        if (persisted) state = { ...state, ...persisted };
+
+        const reels = qa(root, "[data-reel]");
+        const symbols = reels.map((r) => q(r, "[data-symbol]"));
+        const balanceEl = q(root, "[data-balance]");
+        const playsEl = q(root, "[data-plays]");
+        const wins2El = q(root, "[data-wins2]");
+        const wins3El = q(root, "[data-wins3]");
+        const profitEl = q(root, "[data-profit]");
+        const winrateEl = q(root, "[data-winrate]");
+        const rtpEl = q(root, "[data-rtp]");
+        const betEl = /** @type {HTMLInputElement|null} */ (
+          q(root, "[data-bet]")
+        );
+        const betInc = q(root, "[data-bet-inc]");
+        const betDec = q(root, "[data-bet-dec]");
+        const spinBtn = q(root, "[data-spin]");
+        const autoBtn = q(root, "[data-auto]");
+        const resetBtn = q(root, "[data-reset]");
+        const audioBtn = q(root, "[data-audio-toggle]");
+        const pairx = q(root, "[data-pairx]");
+        const jackpotx = q(root, "[data-jackpotx]");
+
+        if (pairx) pairx.textContent = `${cfg.pairMult}× bet`;
+        if (jackpotx) jackpotx.textContent = `${cfg.jackpotMult}× bet`;
+
+        let audioOn = true;
+        let autoTimer = null;
+
+        function updateHUD() {
+          balanceEl && (balanceEl.textContent = "$ " + String(state.balance));
+          playsEl && (playsEl.textContent = String(state.plays));
+          wins2El && (wins2El.textContent = String(state.wins2));
+          wins3El && (wins3El.textContent = String(state.wins3));
+          profitEl && (profitEl.textContent = fmtMoney(state.profit));
+          if (betEl) betEl.value = String(state.bet);
+
+          const wins = state.wins2 + state.wins3;
+          const creditsIn = state.plays * state.bet;
+          const creditsOut = state.profit + creditsIn;
+          winrateEl &&
+            (winrateEl.textContent = pct(
+              state.plays ? (wins / state.plays) * 100 : 0
+            ));
+          rtpEl &&
+            (rtpEl.textContent = pct(
+              creditsIn ? (creditsOut / creditsIn) * 100 : 0
+            ));
+          // Disable Spin button if funds are insufficient
+          spinBtn && (spinBtn.disabled = state.balance < state.bet);
+        }
+
+        function setSymbols(vals) {
+          vals.forEach((sym, i) => {
+            const span = symbols[i];
+            if (!span) return;
+            span.textContent = sym;
+            span.className = getColor(sym);
+          });
+        }
+
+        function animate() {
+          const ms = cfg.spinMs;
+          reels.forEach((r, i) => {
+            r.style.transform = "translateY(-6px)";
+            setTimeout(() => {
+              r.style.transform = "translateY(0)";
+            }, ms);
+          });
+        }
+
+        function setControls(disabled) {
+          [spinBtn, autoBtn, resetBtn, betEl, betInc, betDec].forEach((el) => {
+            if (el && "disabled" in el) el.disabled = disabled;
+          });
+        }
+
+        function doSpin() {
+          if (state.balance < state.bet) {
+            updateHUD();
+            return;
+          }
+          setControls(true);
+          animate();
+          if (audioOn) sfx.spin();
+
+          const res = spin();
+          setTimeout(() => {
+            setSymbols([res.r1, res.r2, res.r3]);
+
+            const { allMatch, twoMatch } = evaluate(res);
+            const win = allMatch
+              ? cfg.jackpotMult * state.bet
+              : twoMatch
+                ? cfg.pairMult * state.bet
+                : 0;
+
+            const net = win - state.bet;
+            state.balance += net;
+            state.profit += net;
+            state.plays += 1;
+            if (allMatch) {
+              state.wins3 += 1;
+              audioOn && sfx.jackpot();
+            } else if (twoMatch) {
+              state.wins2 += 1;
+              audioOn && sfx.pair();
+            }
+
+            persist.save(cfg.persistKey, state);
+            updateHUD();
+            setControls(false);
+          }, cfg.spinMs);
+        }
+
+        spinBtn && (spinBtn.onclick = () => doSpin());
+
+        autoBtn &&
+          (autoBtn.onclick = () => {
+            if (autoTimer) {
+              clearInterval(autoTimer);
+              autoTimer = null;
+              autoBtn.textContent = "Autoplay";
+              autoBtn.setAttribute("aria-pressed", "false");
+              setControls(false);
+            } else {
+              autoBtn.textContent = "Stop Auto";
+              autoBtn.setAttribute("aria-pressed", "true");
+              setControls(false);
+              autoTimer = setInterval(() => {
+                if (state.balance < state.bet) {
+                  clearInterval(autoTimer);
+                  autoTimer = null;
+                  autoBtn.textContent = "Autoplay";
+                  autoBtn.setAttribute("aria-pressed", "false");
+                  setControls(false);
+                  return;
+                }
+                doSpin();
+              }, cfg.autoInterval);
+            }
+          });
+
+        resetBtn &&
+          (resetBtn.onclick = () => {
+            persist.clear(cfg.persistKey);
+            state = {
+              balance: cfg.startBalance,
+              bet: clamp(state.bet, MIN_BET, MAX_BET),
+              plays: 0,
+              wins2: 0,
+              wins3: 0,
+              profit: 0,
+            };
+            setSymbols(["❔", "❔", "❔"]);
+            updateHUD();
+          });
+
+        audioBtn &&
+          (audioBtn.onclick = () => {
+            audioOn = !audioOn;
+            audioBtn.textContent = audioOn ? "🔊 Sound On" : "🔇 Sound Off";
+          });
+
+        betEl &&
+          (betEl.oninput = () => {
+            const v = clamp(
+              parseInt(betEl.value || "0", 10) || MIN_BET,
+              MIN_BET,
+              MAX_BET
+            );
+            state.bet = v;
+            betEl.value = String(v);
+            updateHUD();
+          });
+        betInc &&
+          (betInc.onclick = () => {
+            state.bet = clamp(state.bet + 1, MIN_BET, MAX_BET);
+            updateHUD();
+          });
+        betDec &&
+          (betDec.onclick = () => {
+            state.bet = clamp(state.bet - 1, MIN_BET, MAX_BET);
+            updateHUD();
+          });
+
+        updateHUD();
+      }
+
+      document.querySelectorAll("[data-slot]").forEach((root) => init(root));
+    </script>
   </body>
 </html>
